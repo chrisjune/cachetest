@@ -1,0 +1,3 @@
+django
+fakeredis
+django-redis
