@@ -4,10 +4,9 @@ from fakeredis import FakeServer, FakeRedis
 import django_redis
 import os
 from django.core.cache import caches
-from django.core.cache import CacheHandler
+from django.core import cache
 
 server = FakeServer()
-
 
 class CacheTest:
     def __init__(self, default='default'):
@@ -17,8 +16,9 @@ class CacheTest:
         return FakeRedis(host=self.default, server=server)
 
     def __call__(self, func):
+        print('call')
         mock.patch.object(django_redis, 'get_redis_connection', return_value=self.get_r()).start()
-        # mock.patch.object(CacheHandler, '__init__', return_value=self.get_r()).start()
+        mock.patch.object(cache, 'caches', return_value=self.get_r()).start()
         return func
 
     def __enter__(self):
@@ -27,3 +27,5 @@ class CacheTest:
 
     def __exit__(self):
         print('exit')
+
+
