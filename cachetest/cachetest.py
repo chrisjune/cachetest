@@ -12,19 +12,6 @@ server = {}
 class CacheTest:
     def __init__(self, alias='default'):
         self.alias = alias
-        # self.setting = modify_settings(
-        #     CACHES={
-        #         'append': {
-        #             f'{alias}': {
-        #                 'BACKEND': 'django_redis.cache.RedisCache',
-        #                 'LOCATION': 'redis://127.0.0.1:6379/0',
-        #                 "OPTIONS": {
-        #                     "REDIS_CLIENT_CLASS": "fakeredis.FakeStrictRedis",
-        #                 }
-        #             }
-        #         }
-        #     }
-        # )
         self.setting = override_settings(
             CACHES={
                 f'{alias}': {
